@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: ${POSTGRESQL_URL}
+    username: ${POSTGRESQL_USER}
+    password: ${POSTGRESQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update

@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: smartgrow-service
+
+  security:
+    user:
+      name: hoang
+      password: 123456
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: iot_service
+    show-sql: true
+
+  datasource:
+    hikari:
+      connection-timeout: 15000
+      schema: iot_service
+      maximum-pool-size: 15
+      minimum-idle: 1
+    driver-class-name: org.postgresql.Driver
