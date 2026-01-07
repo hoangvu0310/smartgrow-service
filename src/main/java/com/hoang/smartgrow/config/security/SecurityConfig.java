@@ -27,6 +27,12 @@ public class SecurityConfig {
 
   private CustomAccessDeniedHandler accessDeniedHandler;
 
+  private static final String[] SWAGGER_WHITELIST = {
+      "/api/v1/swagger-ui.html",
+      "/api/v1/swagger-ui/**",
+      "/api/v1/api-docs/**"
+  };
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) {
     return httpSecurity
@@ -35,6 +41,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(
             auth -> auth
                 .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers(SWAGGER_WHITELIST).permitAll()
                 .anyRequest().authenticated()
         )
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -49,6 +56,8 @@ public class SecurityConfig {
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
     configuration.setAllowedOrigins(List.of("*"));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);

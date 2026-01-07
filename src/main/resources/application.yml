@@ -26,9 +26,11 @@ spring:
       minimum-idle: 1
     driver-class-name: org.postgresql.Driver
 
-  http:
-    converters:
-      string-encoding-charset: UTF-8
+springdoc:
+  api-docs:
+    path: "/api/v1/api-docs"
+  swagger-ui:
+    path: "/api/v1/swagger-ui.html"
 
 auth-token:
   secret: ${JWT_SECRET} # Base64
