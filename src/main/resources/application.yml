@@ -25,3 +25,12 @@ spring:
       maximum-pool-size: 15
       minimum-idle: 1
     driver-class-name: org.postgresql.Driver
+
+  http:
+    converters:
+      string-encoding-charset: UTF-8
+
+auth-token:
+  secret: ${JWT_SECRET} # Base64
+  access_token_ttl: 60 # min
+  refresh_token_ttl: 43200 # min
