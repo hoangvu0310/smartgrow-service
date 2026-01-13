@@ -4,7 +4,6 @@ import com.hoang.smartgrow.common.ResultCode;
 import com.hoang.smartgrow.common.Role;
 import com.hoang.smartgrow.config.security.JwtService;
 import com.hoang.smartgrow.config.security.PasswordEncoderService;
-import com.hoang.smartgrow.dto.auth.response.UserTokenPayloadDTO;
 import com.hoang.smartgrow.dto.auth.request.RefreshRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignInRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignUpRequestDTO;
@@ -15,6 +14,7 @@ import com.hoang.smartgrow.exception.SmartGrowException;
 import com.hoang.smartgrow.repository.UserRepository;
 import com.hoang.smartgrow.service.AuthService;
 import com.hoang.smartgrow.service.RefreshTokenService;
+import com.hoang.smartgrow.util.UserUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,11 +45,12 @@ public class AuthServiceImpl implements AuthService {
         if (passwordEncoderService.matches(signInRequestDTO.getPassword(), user.getPassword())) {
           String accessToken = jwtService.generateToken(user);
           String refreshToken = refreshTokenService.createRefreshToken(user);
+          UserResponseDTO userDTO = jwtService.getTokenPayload(accessToken);
 
           return TokenResponseDTO.builder()
               .accessToken(accessToken)
               .refreshToken(refreshToken)
-              .user(jwtService.getTokenPayload(accessToken))
+              .user(userDTO)
               .build();
         } else {
           throw new SmartGrowException(ResultCode.INVALID_CREDENTIALS);
@@ -91,8 +92,6 @@ public class AuthServiceImpl implements AuthService {
           .phoneNumber(newUser.getPhoneNumber())
           .fullName(newUser.getFullName())
           .role(newUser.getRole())
-          .createdAt(newUser.getCreatedAt())
-          .createBy(newUser.getCreatedBy())
           .build();
     } catch (Exception e) {
       log.error(e.getMessage(), e);
@@ -105,15 +104,17 @@ public class AuthServiceImpl implements AuthService {
     try {
       User currentUser = userRepository.findUserByUserId(refreshRequestDTO.getUserId());
       String newRefreshToken = refreshTokenService.refresh(refreshRequestDTO);
-      String newAccessToken  = jwtService.generateToken(currentUser);
+      String newAccessToken = jwtService.generateToken(currentUser);
 
       return TokenResponseDTO.builder()
           .accessToken(newAccessToken)
           .refreshToken(newRefreshToken)
           .user(
-              UserTokenPayloadDTO.builder()
+              UserResponseDTO.builder()
                   .userId(currentUser.getUserId())
                   .username(currentUser.getUsername())
+                  .email(currentUser.getEmail())
+                  .phoneNumber(currentUser.getPhoneNumber())
                   .fullName(currentUser.getFullName())
                   .role(currentUser.getRole())
                   .build()
@@ -123,5 +124,10 @@ public class AuthServiceImpl implements AuthService {
       log.error(e.getMessage(), e);
       throw e;
     }
+  }
+
+  @Override
+  public UserResponseDTO getUserInfo() {
+    return UserUtil.getCurrentUser();
   }
 }

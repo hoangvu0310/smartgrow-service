@@ -15,6 +15,4 @@ public class UserResponseDTO {
   private String phoneNumber;
   private String fullName;
   private Role role;
-  private Instant createdAt;
-  private String createBy;
 }

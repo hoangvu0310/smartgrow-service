@@ -11,4 +11,5 @@ public interface AuthService {
   TokenResponseDTO signIn(SignInRequestDTO signInRequestDTO) throws SmartGrowException;
   UserResponseDTO signUp(SignUpRequestDTO signUpRequestDTO) throws SmartGrowException;
   TokenResponseDTO refresh(RefreshRequestDTO refreshRequestDTO) throws SmartGrowException;
+  UserResponseDTO getUserInfo();
 }

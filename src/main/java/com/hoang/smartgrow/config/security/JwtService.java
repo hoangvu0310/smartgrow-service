@@ -1,7 +1,7 @@
 package com.hoang.smartgrow.config.security;
 
 import com.hoang.smartgrow.common.Role;
-import com.hoang.smartgrow.dto.auth.response.UserTokenPayloadDTO;
+import com.hoang.smartgrow.dto.auth.response.UserResponseDTO;
 import com.hoang.smartgrow.entity.User;
 import com.hoang.smartgrow.property.AuthTokenProperties;
 import io.jsonwebtoken.Claims;
@@ -38,6 +38,8 @@ public class JwtService {
     Map<String, Object> tokenClaims = new HashMap<>();
     tokenClaims.put("userId", user.getUserId());
     tokenClaims.put("username", user.getUsername());
+    tokenClaims.put("email", user.getEmail());
+    tokenClaims.put("phoneNumber", user.getPhoneNumber());
     tokenClaims.put("fullName", user.getFullName());
     tokenClaims.put("role", user.getRole());
 
@@ -52,7 +54,7 @@ public class JwtService {
 
   public Boolean validateToken(String token, String tokenType) {
     try {
-      UserTokenPayloadDTO payload = getTokenPayload(token);
+      UserResponseDTO payload = getTokenPayload(token);
       return payload != null;
     } catch (Exception e) {
       log.warn("{} token invalid: {}", tokenType, e.getMessage());
@@ -60,7 +62,7 @@ public class JwtService {
     }
   }
 
-  public UserTokenPayloadDTO getTokenPayload(@NonNull String token) {
+  public UserResponseDTO getTokenPayload(@NonNull String token) {
     String rawToken = token.replace("Bearer ", "").trim();
 
     Claims payload = Jwts.parser()
@@ -69,9 +71,11 @@ public class JwtService {
         .parseSignedClaims(rawToken)
         .getPayload();
 
-    return UserTokenPayloadDTO.builder()
+    return UserResponseDTO.builder()
         .userId(payload.get("userId", Long.class))
         .username(payload.get("username", String.class))
+        .email(payload.get("email", String.class))
+        .phoneNumber(payload.get("phoneNumber", String.class))
         .fullName(payload.get("fullName", String.class))
         .role(Role.valueOf(payload.get("role", String.class)))
         .build();
