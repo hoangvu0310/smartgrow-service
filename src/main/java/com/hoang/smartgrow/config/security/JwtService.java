@@ -1,7 +1,7 @@
 package com.hoang.smartgrow.config.security;
 
 import com.hoang.smartgrow.common.Role;
-import com.hoang.smartgrow.dto.auth.UserTokenPayloadDTO;
+import com.hoang.smartgrow.dto.auth.response.UserTokenPayloadDTO;
 import com.hoang.smartgrow.entity.User;
 import com.hoang.smartgrow.property.AuthTokenProperties;
 import io.jsonwebtoken.Claims;

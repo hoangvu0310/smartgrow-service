@@ -3,14 +3,10 @@ package com.hoang.smartgrow.entity;
 import com.hoang.smartgrow.common.Role;
 import com.hoang.smartgrow.entity.base.BaseCreatedEntity;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -42,7 +38,6 @@ public class User extends BaseCreatedEntity {
   @Column(name = "phone_number")
   private String phoneNumber;
 
-  @Builder.Default
-  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<RefreshToken> refreshTokens = new ArrayList<>();
+  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+  private RefreshToken refreshTokens;
 }

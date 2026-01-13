@@ -1,7 +1,7 @@
 package com.hoang.smartgrow.config.security;
 
 import com.hoang.smartgrow.common.Const;
-import com.hoang.smartgrow.dto.auth.UserTokenPayloadDTO;
+import com.hoang.smartgrow.dto.auth.response.UserTokenPayloadDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

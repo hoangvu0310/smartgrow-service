@@ -1,6 +1,5 @@
 package com.hoang.smartgrow.dto.auth.response;
 
-import com.hoang.smartgrow.dto.auth.UserTokenPayloadDTO;
 import lombok.Builder;
 import lombok.Data;
 

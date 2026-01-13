@@ -4,7 +4,7 @@ import com.hoang.smartgrow.common.ResultCode;
 import com.hoang.smartgrow.common.Role;
 import com.hoang.smartgrow.config.security.JwtService;
 import com.hoang.smartgrow.config.security.PasswordEncoderService;
-import com.hoang.smartgrow.dto.auth.UserTokenPayloadDTO;
+import com.hoang.smartgrow.dto.auth.response.UserTokenPayloadDTO;
 import com.hoang.smartgrow.dto.auth.request.RefreshRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignInRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignUpRequestDTO;

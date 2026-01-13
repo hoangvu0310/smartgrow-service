@@ -1,4 +1,4 @@
-package com.hoang.smartgrow.dto.auth;
+package com.hoang.smartgrow.dto.auth.response;
 
 import com.hoang.smartgrow.common.Role;
 import lombok.Builder;
