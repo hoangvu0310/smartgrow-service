@@ -1,6 +1,6 @@
 package com.hoang.smartgrow.entity;
 
-import com.hoang.smartgrow.common.Role;
+import com.hoang.smartgrow.common.Enum;
 import com.hoang.smartgrow.entity.base.BaseCreatedEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,8 +29,15 @@ public class User extends BaseCreatedEntity {
   @Column(name = "full_name", nullable = false)
   private String fullName;
 
+
+  /**
+   * 0: Role Admin
+   * 1: Role Employer
+   * 2: Role Employee
+   */
   @Column(name = "role", nullable = false)
-  private Role role;
+  @Enumerated(EnumType.STRING)
+  private Enum.Role role;
 
   @Column(name = "email")
   private String email;

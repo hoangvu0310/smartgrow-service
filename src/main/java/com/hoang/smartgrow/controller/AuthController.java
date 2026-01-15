@@ -1,11 +1,12 @@
 package com.hoang.smartgrow.controller;
 
 import com.hoang.smartgrow.common.Const;
+import com.hoang.smartgrow.dto.ApiResponse;
 import com.hoang.smartgrow.dto.auth.request.RefreshRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignInRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignUpRequestDTO;
 import com.hoang.smartgrow.dto.auth.response.TokenResponseDTO;
-import com.hoang.smartgrow.dto.auth.response.UserResponseDTO;
+import com.hoang.smartgrow.dto.auth.response.UserInfoDTO;
 import com.hoang.smartgrow.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,22 +21,28 @@ public class AuthController {
   private AuthService authService;
 
   @PostMapping("/signIn")
-  public ResponseEntity<TokenResponseDTO> signIn(@Valid @RequestBody SignInRequestDTO signInRequestDTO) {
-    return ResponseEntity.ok(authService.signIn(signInRequestDTO));
+  public ResponseEntity<ApiResponse<TokenResponseDTO>> signIn(@Valid @RequestBody SignInRequestDTO signInRequestDTO) {
+    return ResponseEntity.ok(ApiResponse.successResponse(authService.signIn(signInRequestDTO)));
   }
 
   @PostMapping("/signUp")
-  public ResponseEntity<UserResponseDTO> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
-    return ResponseEntity.ok(authService.signUp(signUpRequestDTO));
+  public ResponseEntity<ApiResponse<UserInfoDTO>> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
+    return ResponseEntity.ok(ApiResponse.successResponse(authService.signUp(signUpRequestDTO)));
   }
 
   @PostMapping("/refresh")
-  public ResponseEntity<TokenResponseDTO> refresh(@RequestBody RefreshRequestDTO refreshRequestDTO) {
-    return ResponseEntity.ok(authService.refresh(refreshRequestDTO));
+  public ResponseEntity<ApiResponse<TokenResponseDTO>> refresh(@RequestBody RefreshRequestDTO refreshRequestDTO) {
+    return ResponseEntity.ok(ApiResponse.successResponse(authService.refresh(refreshRequestDTO)));
   }
 
   @GetMapping("userInfo")
-  public ResponseEntity<UserResponseDTO> getUserInfo() {
-    return ResponseEntity.ok(authService.getUserInfo());
+  public ResponseEntity<ApiResponse<UserInfoDTO>> getUserInfo() {
+    return ResponseEntity.ok(ApiResponse.successResponse(authService.getUserInfo()));
+  }
+
+  @PostMapping("/logout")
+  public ResponseEntity<ApiResponse<Void>> logout() {
+    authService.logout();
+    return ResponseEntity.ok(ApiResponse.successResponse());
   }
 }

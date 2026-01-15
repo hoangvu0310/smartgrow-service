@@ -6,4 +6,5 @@ import com.hoang.smartgrow.entity.User;
 public interface RefreshTokenService {
   String createRefreshToken(User user);
   String refresh(RefreshRequestDTO refreshRequestDTO);
+  void deleteToken(Long userId);
 }

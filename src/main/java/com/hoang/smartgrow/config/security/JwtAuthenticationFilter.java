@@ -1,7 +1,7 @@
 package com.hoang.smartgrow.config.security;
 
 import com.hoang.smartgrow.common.Const;
-import com.hoang.smartgrow.dto.auth.response.UserResponseDTO;
+import com.hoang.smartgrow.dto.auth.response.UserInfoDTO;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     if (token != null) {
       if (jwtService.validateToken(token, Const.TokenType.ACCESS)) {
-        UserResponseDTO payload = jwtService.getTokenPayload(token);
+        UserInfoDTO payload = jwtService.getTokenPayload(token);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + payload.getRole()));
 

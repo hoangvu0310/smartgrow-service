@@ -1,18 +1,16 @@
 package com.hoang.smartgrow.dto.auth.response;
 
-import com.hoang.smartgrow.common.Role;
+import com.hoang.smartgrow.common.Enum;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Instant;
-
 @Data
 @Builder
-public class UserResponseDTO {
+public class UserInfoDTO {
   private Long userId;
   private String username;
   private String email;
   private String phoneNumber;
   private String fullName;
-  private Role role;
+  private Enum.Role role;
 }

@@ -58,7 +58,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
   }
 
   @Override
-  @Transactional
+  @Transactional(rollbackOn = Exception.class)
   public String refresh(RefreshRequestDTO refreshRequestDTO) throws SmartGrowException {
     Boolean isTokenValid = validateRefreshToken(refreshRequestDTO.getRefreshToken(), refreshRequestDTO.getUserId());
 
@@ -68,6 +68,12 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     } else {
       throw new SmartGrowException(ResultCode.UNAUTHORIZED);
     }
+  }
+
+  @Override
+  @Transactional
+  public void deleteToken(Long userId) {
+    refreshTokenRepository.deleteRefreshTokenByUserId(userId);
   }
 
 

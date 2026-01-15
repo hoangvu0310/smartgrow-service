@@ -2,7 +2,9 @@ package com.hoang.smartgrow.entity;
 
 import com.hoang.smartgrow.entity.base.BaseAuditableEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.Instant;

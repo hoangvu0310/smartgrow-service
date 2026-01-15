@@ -1,14 +1,14 @@
 package com.hoang.smartgrow.service.impl;
 
+import com.hoang.smartgrow.common.Enum;
 import com.hoang.smartgrow.common.ResultCode;
-import com.hoang.smartgrow.common.Role;
 import com.hoang.smartgrow.config.security.JwtService;
 import com.hoang.smartgrow.config.security.PasswordEncoderService;
 import com.hoang.smartgrow.dto.auth.request.RefreshRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignInRequestDTO;
 import com.hoang.smartgrow.dto.auth.request.SignUpRequestDTO;
 import com.hoang.smartgrow.dto.auth.response.TokenResponseDTO;
-import com.hoang.smartgrow.dto.auth.response.UserResponseDTO;
+import com.hoang.smartgrow.dto.auth.response.UserInfoDTO;
 import com.hoang.smartgrow.entity.User;
 import com.hoang.smartgrow.exception.SmartGrowException;
 import com.hoang.smartgrow.repository.UserRepository;
@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         if (passwordEncoderService.matches(signInRequestDTO.getPassword(), user.getPassword())) {
           String accessToken = jwtService.generateToken(user);
           String refreshToken = refreshTokenService.createRefreshToken(user);
-          UserResponseDTO userDTO = jwtService.getTokenPayload(accessToken);
+          UserInfoDTO userDTO = jwtService.getTokenPayload(accessToken);
 
           return TokenResponseDTO.builder()
               .accessToken(accessToken)
@@ -65,16 +65,16 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public UserResponseDTO signUp(SignUpRequestDTO signUpRequestDTO) throws SmartGrowException {
+  public UserInfoDTO signUp(SignUpRequestDTO signUpRequestDTO) throws SmartGrowException {
     try {
-      Optional<User> existedUser = userRepository.findUserByUsername(signUpRequestDTO.getUsername());
+      boolean isUserExisted = userRepository.existsUserByUsername(signUpRequestDTO.getUsername());
 
-      if (existedUser.isPresent()) {
+      if (isUserExisted) {
         throw new SmartGrowException(ResultCode.EXISTED_USER);
       }
 
       User newUser = User.builder()
-          .role(Role.EMPLOYER)
+          .role(Enum.Role.EMPLOYER)
           .fullName(signUpRequestDTO.getFullName())
           .username(signUpRequestDTO.getUsername())
           .password(passwordEncoderService.encodePassword(signUpRequestDTO.getPassword()))
@@ -85,7 +85,7 @@ public class AuthServiceImpl implements AuthService {
 
       userRepository.save(newUser);
 
-      return UserResponseDTO.builder()
+      return UserInfoDTO.builder()
           .userId(newUser.getUserId())
           .username(newUser.getUsername())
           .email(newUser.getEmail())
@@ -110,7 +110,7 @@ public class AuthServiceImpl implements AuthService {
           .accessToken(newAccessToken)
           .refreshToken(newRefreshToken)
           .user(
-              UserResponseDTO.builder()
+              UserInfoDTO.builder()
                   .userId(currentUser.getUserId())
                   .username(currentUser.getUsername())
                   .email(currentUser.getEmail())
@@ -127,7 +127,19 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public UserResponseDTO getUserInfo() {
-    return UserUtil.getCurrentUser();
+  public UserInfoDTO getUserInfo() {
+    return UserUtil.getCurrentUser() ;
+  }
+
+  @Override
+  public void logout() throws SmartGrowException {
+    UserInfoDTO userInfoDTO = UserUtil.getCurrentUser();
+
+    if (userInfoDTO != null) {
+      refreshTokenService.deleteToken(userInfoDTO.getUserId());
+    } else {
+      throw new SmartGrowException(ResultCode.INTERNAL_ERROR);
+    }
+
   }
 }
