@@ -15,11 +15,13 @@ import com.hoang.jobfinder.repository.UserRepository;
 import com.hoang.jobfinder.service.AuthService;
 import com.hoang.jobfinder.service.RefreshTokenService;
 import com.hoang.jobfinder.util.UserUtil;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -74,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
       }
 
       User newUser = User.builder()
-          .role(Enum.Role.EMPLOYER)
+          .role(Enum.Role.USER)
           .fullName(signUpRequestDTO.getFullName())
           .username(signUpRequestDTO.getUsername())
           .password(passwordEncoderService.encodePassword(signUpRequestDTO.getPassword()))
@@ -85,14 +87,7 @@ public class AuthServiceImpl implements AuthService {
 
       userRepository.save(newUser);
 
-      return UserInfoDTO.builder()
-          .userId(newUser.getUserId())
-          .username(newUser.getUsername())
-          .email(newUser.getEmail())
-          .phoneNumber(newUser.getPhoneNumber())
-          .fullName(newUser.getFullName())
-          .role(newUser.getRole())
-          .build();
+      return UserInfoDTO.fromUser(newUser);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       throw e;
@@ -141,5 +136,48 @@ public class AuthServiceImpl implements AuthService {
       throw new JobFinderException(ResultCode.INTERNAL_ERROR);
     }
 
+  }
+
+  @Override
+  public TokenResponseDTO guest(String deviceId) {
+    UUID guestId = UUID.randomUUID();
+    User guestUser = User.builder()
+        .username("guest_" + guestId)
+        .password(passwordEncoderService.encodePassword("guest"))
+        .fullName("Guest User " + guestId)
+        .role(Enum.Role.GUEST)
+        .build();
+
+    userRepository.save(guestUser);
+
+    String accessToken = jwtService.generateToken(guestUser);
+    String refreshToken = refreshTokenService.createRefreshToken(guestUser, deviceId, null);
+
+    return TokenResponseDTO.builder()
+        .accessToken(accessToken)
+        .refreshToken(refreshToken)
+        .user(UserInfoDTO.fromUser(guestUser))
+        .build();
+  }
+
+  @Override
+  @Transactional
+  public void guestToUser(SignUpRequestDTO signUpRequestDTO) throws JobFinderException {
+    UserInfoDTO guestUserInfo = UserUtil.getCurrentUser();
+
+    if (guestUserInfo != null) {
+      User guestuser = userRepository.findUserByUserId(guestUserInfo.getUserId());
+
+      if (userRepository.existsUserByUsername(signUpRequestDTO.getUsername())) {
+        throw new JobFinderException(ResultCode.EXISTED_USER);
+      }
+
+      guestuser.setUsername(signUpRequestDTO.getUsername());
+      guestuser.setPassword(passwordEncoderService.encodePassword(signUpRequestDTO.getPassword()));
+      guestuser.setFullName(signUpRequestDTO.getFullName());
+      guestuser.setEmail(signUpRequestDTO.getEmail());
+      guestuser.setPhoneNumber(signUpRequestDTO.getPhoneNumber());
+      guestuser.setRole(Enum.Role.USER);
+    }
   }
 }

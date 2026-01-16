@@ -13,4 +13,6 @@ public interface AuthService {
   TokenResponseDTO refresh(RefreshRequestDTO refreshRequestDTO) throws JobFinderException;
   UserInfoDTO getUserInfo();
   void logout() throws JobFinderException;
+  TokenResponseDTO guest(String deviceId);
+  void guestToUser(SignUpRequestDTO signUpRequestDTO);
 }

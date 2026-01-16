@@ -3,8 +3,9 @@ package com.hoang.jobfinder.common;
 public class Enum {
   public enum Role {
     ADMIN,
-    EMPLOYER,
-    EMPLOYEE
+    USER,
+    GUEST,
+    HR
   }
 
   public enum Platform {

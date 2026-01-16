@@ -3,11 +3,13 @@ package com.hoang.jobfinder.entity;
 import com.hoang.jobfinder.common.Enum;
 import com.hoang.jobfinder.entity.base.BaseCreatedEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,8 +36,9 @@ public class User extends BaseCreatedEntity {
 
   /**
    * 0: Role Admin
-   * 1: Role Employer
-   * 2: Role Employee
+   * 1: Role User
+   * 2: Role Guest
+   * 3: Role Company
    */
   @Column(name = "role", nullable = false, length = 10)
   @Enumerated(EnumType.STRING)
@@ -47,6 +50,7 @@ public class User extends BaseCreatedEntity {
   @Column(name = "phone_number", length = 20)
   private String phoneNumber;
 
+  @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<RefreshToken> refreshTokens;
+  private List<RefreshToken> refreshTokens = new ArrayList<>();
 }

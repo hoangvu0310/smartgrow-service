@@ -11,6 +11,7 @@ import com.hoang.jobfinder.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -43,6 +44,18 @@ public class AuthController {
   @PostMapping("/logout")
   public ResponseEntity<ApiResponse<Void>> logout() {
     authService.logout();
+    return ResponseEntity.ok(ApiResponse.successResponse());
+  }
+
+  @PostMapping("/guest/{deviceId}")
+  public ResponseEntity<ApiResponse<TokenResponseDTO>> guest(@PathVariable String deviceId) {
+    return ResponseEntity.ok(ApiResponse.successResponse(authService.guest(deviceId)));
+  }
+
+  @PreAuthorize("hasRole('GUEST')")
+  @PostMapping("/guestToUser")
+  public ResponseEntity<ApiResponse<Void>> guestToUser(@RequestBody SignUpRequestDTO signUpRequestDTO) {
+    authService.guestToUser(signUpRequestDTO);
     return ResponseEntity.ok(ApiResponse.successResponse());
   }
 }
