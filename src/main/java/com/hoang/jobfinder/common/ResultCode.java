@@ -14,7 +14,8 @@ public enum ResultCode {
   INTERNAL_ERROR(ErrorCode.INTERNAL_ERROR, "Lỗi hệ thống", HttpStatus.INTERNAL_SERVER_ERROR),
   BAD_REQUEST(ErrorCode.BAD_REQUEST, "Yêu cầu không hợp lệ", HttpStatus.BAD_REQUEST),
   INVALID_CREDENTIALS(ErrorCode.INVALID_CREDENTIALS, "Thông tin đăng nhập không chính xác", HttpStatus.UNAUTHORIZED),
-  EXISTED_USER(ErrorCode.EXISTED_USER, "Tài khoản đã tồn tại", HttpStatus.CONFLICT);
+  EXISTED_USER(ErrorCode.EXISTED_USER, "Tài khoản đã tồn tại", HttpStatus.CONFLICT),
+  ILLEGAL_ARGUMENT(ErrorCode.ILLEGAL_ARGUMENT, "Tham số không hợp lệ", HttpStatus.BAD_REQUEST);
 
   private final String code;
   private final String message;

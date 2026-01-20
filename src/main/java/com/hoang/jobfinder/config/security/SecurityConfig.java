@@ -40,7 +40,13 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             auth -> auth
-                .requestMatchers("/api/v1/auth/signIn", "/api/v1/auth/signUp", "/api/v1/auth/refresh", "/api/v1/auth/guest/**")
+                .requestMatchers(
+                    "/api/v1/auth/signIn",
+                    "/api/v1/auth/signUp",
+                    "/api/v1/auth/refresh",
+                    "/api/v1/auth/guest/**",
+                    "/api/v1/socialAuth/**"
+                )
                 .permitAll()
                 .requestMatchers(SWAGGER_WHITELIST).permitAll()
                 .anyRequest().authenticated()

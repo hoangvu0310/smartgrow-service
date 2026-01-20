@@ -12,4 +12,9 @@ public class Enum {
     ANDROID,
     IOS
   }
+
+  public enum AuthType {
+    USERNAME_AND_PASSWORD,
+    GOOGLE
+  }
 }

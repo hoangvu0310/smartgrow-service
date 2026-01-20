@@ -27,12 +27,11 @@ public class User extends BaseCreatedEntity {
   @Column(name = "username", nullable = false, unique = true)
   private String username;
 
-  @Column(name = "password", nullable = false)
+  @Column(name = "password")
   private String password;
 
   @Column(name = "full_name", nullable = false)
   private String fullName;
-
 
   /**
    * 0: Role Admin
@@ -49,6 +48,14 @@ public class User extends BaseCreatedEntity {
 
   @Column(name = "phone_number", length = 20)
   private String phoneNumber;
+
+  /**
+   * 0: Username & password
+   * 1: Google
+   */
+  @Column(name = "auth_type", nullable = false, length = 30)
+  @Enumerated(EnumType.STRING)
+  private Enum.AuthType authType;
 
   @Builder.Default
   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

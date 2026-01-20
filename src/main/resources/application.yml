@@ -15,13 +15,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        default_schema: iot_service
+        default_schema: jobspot_service
     show-sql: true
 
   datasource:
     hikari:
       connection-timeout: 15000
-      schema: iot_service
+      schema: jobspot_service
       maximum-pool-size: 15
       minimum-idle: 1
       data-source-properties:

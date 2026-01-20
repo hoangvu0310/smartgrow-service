@@ -1,5 +1,6 @@
 package com.hoang.jobfinder.exception;
 
+import com.hoang.jobfinder.common.ResultCode;
 import com.hoang.jobfinder.dto.ApiResponse;
 import com.hoang.jobfinder.common.ErrorCode;
 import jakarta.validation.ConstraintViolationException;
@@ -47,6 +48,15 @@ public class GlobalExceptionHandler {
     return ResponseEntity
         .badRequest()
         .body(ApiResponse.errorResponse(ErrorCode.VALIDATION_ERROR, message));
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ApiResponse<Void>> handleIllegalArgument(IllegalArgumentException exception) {
+    log.error("Illegal Argument exception occur with reason: {}", exception.getMessage(), exception);
+
+    return ResponseEntity
+        .badRequest()
+        .body(ApiResponse.errorResponse(ResultCode.ILLEGAL_ARGUMENT));
   }
 
   @ExceptionHandler(ConstraintViolationException.class)

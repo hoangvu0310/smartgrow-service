@@ -82,6 +82,7 @@ public class AuthServiceImpl implements AuthService {
           .password(passwordEncoderService.encodePassword(signUpRequestDTO.getPassword()))
           .email(signUpRequestDTO.getEmail())
           .phoneNumber(signUpRequestDTO.getPhoneNumber())
+          .authType(Enum.AuthType.USERNAME_AND_PASSWORD)
           .createdBy(signUpRequestDTO.getUsername())
           .build();
 
