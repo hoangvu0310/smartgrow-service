@@ -121,7 +121,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
   @Override
   public UploadUrlResponseDTO generateAvatarUploadUrl(FileTypeDTO fileTypeDTO) {
-    FileUtil.validateImageFileType(Const.IMAGE_VALID_TYPE, fileTypeDTO.getFileType());
+    FileUtil.validateImageFileType(fileTypeDTO.getFileType());
 
     AccountInfoDTO infoDTO = UserUtil.getCurrentUser();
 
