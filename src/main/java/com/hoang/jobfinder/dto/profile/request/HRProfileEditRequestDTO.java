@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class HRProfileEditRequestDTO {
+  private String avatarUrlKey;
   private String fullName;
   private String title;
   private String description;

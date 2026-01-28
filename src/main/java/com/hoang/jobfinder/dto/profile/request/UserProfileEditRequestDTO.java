@@ -11,6 +11,7 @@ public class UserProfileEditRequestDTO {
   private String fullName;
   private String phoneNumber;
   private String address;
+  private String avatarUrlKey;
   private String description;
   private List<WorkExperienceDTO> workExperienceList;
   private List<EducationInfoDTO> educationInfoList;

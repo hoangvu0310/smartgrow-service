@@ -10,8 +10,10 @@ spring:
 
 supabase:
   s3:
-    endpoint-url: "https://glrawoqhdlardyagmzih.storage.supabase.co/storage/v1/s3"
+    endpoint-url: ${SUPABASE_S3_ENDPOINT_URL}
     region: "ap-southeast-1"
     access-key-id: ${SUPABASE_S3_KEY_ID}
     secret-access-key: ${SUPABASE_SECRET_ACCESS_KEY}
-    bucket-name: "job-finder-service"
+    public-bucket-name: "public-job-finder-bucket"
+    private-bucket-name: "private-job-finder-bucket"
+    public-asset-link: "https://${SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/public-job-finder-bucket"

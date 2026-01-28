@@ -39,11 +39,6 @@ public class SupabaseS3Config {
   }
 
   @Bean
-  public String supabaseBucketName() {
-    return supabaseS3Properties.getBucketName();
-  }
-
-  @Bean
   public S3Presigner s3Presigner() {
     return S3Presigner.builder()
         .endpointOverride(URI.create(supabaseS3Properties.getEndpointUrl()))

@@ -23,6 +23,9 @@ public class UserProfile extends BaseAuditableEntity {
   @Column(name = "profile_id", nullable = false)
   private Long profileId;
 
+  @Column(name = "avatar_url_key")
+  private String avatarUrlKey;
+
   @Column(name = "full_name", nullable = false)
   private String fullName;
 

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class HRProfileResponseDTO {
+  private String avatarUrl;
   private String fullName;
   private String email;
   private String phoneNumber;

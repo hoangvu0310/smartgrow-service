@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 public class UserProfileResponseDTO {
+  private String avatarUrl;
   private String fullName;
   private String phoneNumber;
   private String email;

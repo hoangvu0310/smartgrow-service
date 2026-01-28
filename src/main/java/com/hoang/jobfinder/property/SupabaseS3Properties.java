@@ -12,5 +12,7 @@ public class SupabaseS3Properties {
   private String region;
   private String accessKeyId;
   private String secretAccessKey;
-  private String bucketName;
+  private String publicBucketName;
+  private String privateBucketName;
+  private String publicAssetLink;
 }

@@ -2,7 +2,9 @@ package com.hoang.jobfinder.controller;
 
 import com.hoang.jobfinder.common.Const;
 import com.hoang.jobfinder.dto.ApiResponse;
+import com.hoang.jobfinder.dto.FileTypeDTO;
 import com.hoang.jobfinder.dto.profile.request.UserProfileEditRequestDTO;
+import com.hoang.jobfinder.dto.UploadUrlResponseDTO;
 import com.hoang.jobfinder.dto.profile.response.UserProfileResponseDTO;
 import com.hoang.jobfinder.service.UserProfileService;
 import lombok.AllArgsConstructor;
@@ -23,5 +25,10 @@ public class UserProfileController {
   @PatchMapping()
   public ResponseEntity<ApiResponse<UserProfileResponseDTO>> editUserProfile(@RequestBody UserProfileEditRequestDTO editRequestDTO) {
     return ResponseEntity.ok(ApiResponse.successResponse(userProfileService.editProfile(editRequestDTO)));
+  }
+
+  @PostMapping("/uploadUrl")
+  public ResponseEntity<ApiResponse<UploadUrlResponseDTO>> generateAvatarUploadUrl(@RequestBody FileTypeDTO fileType) {
+    return ResponseEntity.ok(ApiResponse.successResponse(userProfileService.generateAvatarUploadUrl(fileType)));
   }
 }

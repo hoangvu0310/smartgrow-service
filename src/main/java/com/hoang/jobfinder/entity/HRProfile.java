@@ -19,6 +19,9 @@ public class HRProfile extends BaseAuditableEntity {
   @Column(name = "profile_id")
   private Long profile_id;
 
+  @Column(name = "avatar_url_key")
+  private String avatarUrlKey;
+
   @Column(name = "full_name", nullable = false)
   private String fullName;
 
