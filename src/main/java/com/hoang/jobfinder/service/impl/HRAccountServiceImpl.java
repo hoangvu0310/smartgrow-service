@@ -41,7 +41,7 @@ public class HRAccountServiceImpl implements HRAccountService {
     Company company = companyRepository.findCompanyByCompanyId(hrSignUpRequestDTO.getCompanyId()).get(0);
 
     HR newHR = HR.builder()
-        .role(Enum.Role.HR_ADMIN)
+        .role(Enum.Role.HR)
         .password(passwordEncoderService.encodePassword(hrSignUpRequestDTO.getPassword()))
         .email(hrSignUpRequestDTO.getEmail())
         .authType(Enum.AuthType.EMAIL_AND_PASSWORD)
