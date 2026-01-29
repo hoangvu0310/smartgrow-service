@@ -21,6 +21,13 @@ public class JobFinderException extends RuntimeException {
     this.status = HttpStatus.BAD_REQUEST;
   }
 
+  public JobFinderException(String code, String message, HttpStatus status) {
+    super("An error occur with code: " + code + " and message: " + message);
+    this.errorCode = code;
+    this.errorMessage = message;
+    this.status = status == null ? HttpStatus.BAD_REQUEST : status;
+  }
+
   public JobFinderException(@NonNull ResultCode resultCode) {
     super("An error occur with code: " + resultCode.getCode() + " and message: " + resultCode.getMessage());
     this.errorCode = resultCode.getCode();

@@ -9,7 +9,7 @@ import com.hoang.jobfinder.dto.auth.request.RefreshRequestDTO;
 import com.hoang.jobfinder.dto.auth.request.SignInRequestDTO;
 import com.hoang.jobfinder.dto.auth.response.AccountInfoDTO;
 import com.hoang.jobfinder.dto.auth.response.TokenResponseDTO;
-import com.hoang.jobfinder.entity.Company;
+import com.hoang.jobfinder.entity.company.Company;
 import com.hoang.jobfinder.entity.HR;
 import com.hoang.jobfinder.entity.HRProfile;
 import com.hoang.jobfinder.exception.JobFinderException;
@@ -127,10 +127,6 @@ public class HRAuthServiceImpl implements HRAuthService {
   public void logout() {
     AccountInfoDTO accountInfoDTO = UserUtil.getCurrentUser();
 
-    if (accountInfoDTO != null) {
-      refreshTokenService.deleteToken(accountInfoDTO.getUserId(), isHR);
-    } else {
-      throw new JobFinderException(ResultCode.INTERNAL_ERROR);
-    }
+    refreshTokenService.deleteToken(accountInfoDTO.getUserId(), isHR);
   }
 }

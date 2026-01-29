@@ -1,6 +1,7 @@
 package com.hoang.jobfinder.entity;
 
 import com.hoang.jobfinder.entity.base.AccountBaseEntity;
+import com.hoang.jobfinder.entity.company.Company;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

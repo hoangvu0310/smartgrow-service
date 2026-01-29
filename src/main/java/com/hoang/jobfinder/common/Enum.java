@@ -23,4 +23,16 @@ public class Enum {
     AVATAR,
     WORKSPACE_IMG
   }
+
+  public enum CompanyStatus {
+    PENDING,
+    APPROVED,
+    HIDDEN
+  }
+
+  public enum EditStatus {
+    PENDING,
+    APPROVED,
+    REJECTED
+  }
 }

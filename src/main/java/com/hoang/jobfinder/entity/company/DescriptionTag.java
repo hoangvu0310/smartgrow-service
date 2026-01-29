@@ -1,4 +1,4 @@
-package com.hoang.jobfinder.entity;
+package com.hoang.jobfinder.entity.company;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

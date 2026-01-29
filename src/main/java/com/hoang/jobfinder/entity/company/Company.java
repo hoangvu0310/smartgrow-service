@@ -1,16 +1,18 @@
-package com.hoang.jobfinder.entity;
+package com.hoang.jobfinder.entity.company;
 
+import com.hoang.jobfinder.common.Enum;
+import com.hoang.jobfinder.entity.HR;
 import com.hoang.jobfinder.entity.base.BaseAuditableEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "company")
 @Builder
@@ -40,11 +42,12 @@ public class Company extends BaseAuditableEntity {
   @Column(name = "website_url", length = 100)
   private String websiteUrl;
 
-  @Column(name = "avatar_url_key", length = 100)
-  private String avatarUrlKey;
-
   @Column(name = "company_size")
   private Integer companySize;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name ="company_status")
+  private Enum.CompanyStatus companyStatus;
 
   @Builder.Default
   @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)

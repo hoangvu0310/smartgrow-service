@@ -1,11 +1,11 @@
-package com.hoang.jobfinder.entity;
+package com.hoang.jobfinder.entity.company;
 
 import com.hoang.jobfinder.common.Enum;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "company_asset")
 @Builder
@@ -23,6 +23,9 @@ public class CompanyAsset {
   @Column(name = "assetType", length = 20)
   @Enumerated(EnumType.STRING)
   private Enum.CompanyAssetType assetType;
+
+  @Column(name = "file_type", length = 20)
+  private String fileType;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "companyId", nullable = false)

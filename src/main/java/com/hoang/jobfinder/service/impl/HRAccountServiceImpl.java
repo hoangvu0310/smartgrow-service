@@ -6,7 +6,7 @@ import com.hoang.jobfinder.common.ResultCode;
 import com.hoang.jobfinder.config.security.PasswordEncoderService;
 import com.hoang.jobfinder.dto.auth.request.HRSignUpRequestDTO;
 import com.hoang.jobfinder.dto.auth.response.AccountInfoDTO;
-import com.hoang.jobfinder.entity.Company;
+import com.hoang.jobfinder.entity.company.Company;
 import com.hoang.jobfinder.entity.HR;
 import com.hoang.jobfinder.exception.JobFinderException;
 import com.hoang.jobfinder.repository.CompanyRepository;
